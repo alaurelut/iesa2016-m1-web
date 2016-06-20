@@ -36,8 +36,6 @@ class NamedShaped {
     func getInfo() -> String {
         return "Nombre de cote =\(sidesCount)"
     }
-    
-    
 }
 
 class EquilateralTriangle: NamedShaped {
