@@ -1,82 +1,173 @@
-//: Playground - noun: a place where people can play
-
 import UIKit
 
+var str = "Hello, playground"
+
+// 23
 class Shape {
-    
-    // Exemple de propriétés
-    var name: String
-    
-    // Fonction d'initialisation
-    init(name: String) {
-        self.name = name
-    }
-    
-    
-}
-
-class Square : Shape{
-    var sidelength : Double
-    init( length : Double, name : String){
-        self.sidelength = length
-        super.init(name: name)
-        // super.nom = name
-        // super.sides = sides
-    }
-}
-
-var carre = Shape( name: "carre")
-print( carre.name)
-
-
-class NamedShaped {
-    var sidesCount : Int = 0
-    var name: String
-    init(name:String) { self.name = name }
+    var sidesCount = 0
     func getInfo() -> String {
-        return "Nombre de cote =\(sidesCount)"
+        return "A shape with \(sidesCount) sides."
     }
 }
 
-class EquilateralTriangle: NamedShaped {
-    var sidelength: Double = 0.0
+// 24
+var shape = Shape()
+shape.sidesCount = 7
+var shapeDescription = shape.getInfo()
+
+// 25
+class NamedShape {
+    var sidesCount: Int = 0
+    var name: String
+    init(name: String) { self.name = name }
+    func getInfo() -> String { return "\(sidesCount) sides" }
+}
+
+var carre = NamedShape(name:"drapeau")
+
+// 26
+class Square : NamedShape {
+    var sideLength: Double
     init(length: Double, name: String) {
-        self.sidelength = length
+        self.sideLength = length
         super.init(name: name)
-        sidesCount = 3
+        sidesCount = 4
     }
-    
-    var perimeter: Double {
-        get {
-            return 3.0 * sidelength
-        }
-        set {
-            sidelength = newValue / 3.0
-        }
+    func area() -> Double {
+        return sideLength * sideLength
     }
     
     override func getInfo() -> String {
-        return "Length=\(sidelength)"
+        return "Square: L\(sideLength)."
     }
 }
 
-var triangle = EquilateralTriangle(length: 3.3, name: "a triangle")
+let s = Square(length: 5.2, name: "myS")
+s.area()
+s.getInfo()
+
+
+
+// Accesseurs
+class Person {
+    var name: String
+    init(name: String) { self.name = name }
+    func getName() -> String { return "My name is \(name)" }
+    func setName(name: String) { self.name = name }
+}
+
+var pName = Person(name: "Tata")
+pName.getName()
+pName.setName("Toto")
+pName.getName()
+
+//27
+class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0.0
+    init(length: Double, name: String) {
+        self.sideLength = length
+        super.init(name: name)
+        sidesCount = 3
+    }
+    var perimeter: Double {
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
+    }
+    override func getInfo() -> String {
+        return "Length=\(sideLength)"
+    }
+}
+
+var triangle = EquilateralTriangle(length: 3.1, name: "a triangle")
 print(triangle.perimeter)
-print(triangle.sidelength)
-triangle.perimeter = 6.0
+triangle.perimeter = 9.9
 print(triangle.perimeter)
-print(triangle.sidelength)
+print(triangle.sideLength)
+
+
+
+class Age: Person{
+    var age: Int = 0
+    init(age: Int, name: String) {
+        self.age = age
+        super.init(name: name)
+    }
+    var myAge: Int {
+        get {
+            return age
+        }
+        set {
+            age = newValue
+        }
+    }
+    func getAge() -> String {
+        return "L'age est de \(age)"
+    }
+}
+
+var monAge = Age(age: 23, name: "Mon âge")
+print(monAge.myAge)
+monAge.myAge = 24
+print(monAge.myAge)
 
 
 
 
+// 29 Paramètres nommés
 class Counter {
     var count: Int = 0
-    func incrementBy(amount: Int, numberOfTimes times: Int){
+    func incrementBy(amount: Int, numberOfTimes times: Int) {
         count += amount * times
     }
 }
 
 var counter = Counter()
-counter.incrementBy(2, numberOfTimes: 7)
-print(counter.count)
+counter.incrementBy(2, numberOfTimes:  7)
+
+
+//31 Enum et rawvalue
+enum Rank: Int {
+    case Ace = 1
+    case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+    case Jack, Queen, King
+    func simpleDescription() -> String {
+        switch self {
+        case .Ace: return "ace"
+        case .Jack: return "jack"
+        case .Queen: return "queen"
+        case .King: return "king"
+        default: return String(self.rawValue)
+        }
+    }
+}
+
+let ace = Rank.Ace
+let aceRawValue = ace.rawValue
+
+enum Suit: Int {
+    case Spades, Hearts, Trefle, Carreaux
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades: return "Spades"
+        case .Hearts: return "Hearts"
+        case .Trefle: return "Trefle"
+        case .Carreaux: return "Carreaux"
+        default: return String(self.rawValue)
+        }
+    }
+}
+
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+let threeOfSpadesDescription = threeOfSpades.simpleDescription()
