@@ -66,3 +66,17 @@ print(triangle.sidelength)
 triangle.perimeter = 6.0
 print(triangle.perimeter)
 print(triangle.sidelength)
+
+
+
+
+class Counter {
+    var count: Int = 0
+    func incrementBy(amount: Int, numberOfTimes times: Int){
+        count += amount * times
+    }
+}
+
+var counter = Counter()
+counter.incrementBy(2, numberOfTimes: 7)
+print(counter.count)
